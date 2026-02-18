@@ -1,0 +1,13 @@
+{
+  "name": "S32 (Secretaria 24/7)",
+  "short_name": "S32",
+  "start_url": "/meu-site/",
+  "scope": "/meu-site/",
+  "display": "standalone",
+  "background_color": "#0f2027",
+  "theme_color": "#0f2027",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
