@@ -1,66 +1,397 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Site</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S32 (Secretaria 24/7)</title>
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#0f2027" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="S32" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
 
   <style>
-    body {
-      margin: 0;
+    :root{
+      --bg1:#0f2027; --bg2:#203a43; --bg3:#2c5364;
+      --card:rgba(0,0,0,.35);
+      --line:rgba(255,255,255,.12);
+      --txt:#fff; --muted:rgba(255,255,255,.82);
+      --btn:#00c6ff; --btn2:#00ffcc;
+      --warn:#ffcc00; --ok:#00ffcc;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      color:var(--txt);
+      min-height:100vh;
+      padding:18px;
     }
-
-    .container {
-      background: rgba(0, 0, 0, 0.4);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      max-width: 600px;
+    .wrap{max-width:980px;margin:0 auto}
+    .top{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
     }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 32px;
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width: 220px;
     }
-
-    p {
-      font-size: 18px;
-      opacity: 0.9;
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, var(--btn), var(--btn2));
+      display:flex;align-items:center;justify-content:center;
+      color:#003; font-weight:800;
     }
-
-    button {
-      margin-top: 25px;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
-      background-color: #00c6ff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
+    .title{display:flex; flex-direction:column; gap:2px}
+    .title b{font-size:16px}
+    .title span{font-size:12px;color:var(--muted)}
+    .status{
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
     }
-
-    button:hover {
-      background-color: #00ffcc;
+    .pill{
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      background: rgba(0,0,0,.20);
+      display:flex; gap:8px; align-items:center;
+    }
+    .dot{width:8px;height:8px;border-radius:50%}
+    .dot.ok{background:var(--ok)}
+    .dot.warn{background:var(--warn)}
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr}
+      .brand{min-width:auto}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
+      padding:16px;
+    }
+    h2{
+      margin:0 0 10px 0;
+      font-size:16px;
+    }
+    p{margin:8px 0;color:var(--muted);line-height:1.35}
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:11px 14px;
+      font-weight:700;
+      cursor:pointer;
+      background:var(--btn);
+      color:#001;
+      transition: .2s;
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none;
+    }
+    .btn:hover{background:var(--btn2)}
+    .btn.secondary{
+      background: rgba(255,255,255,.10);
+      color: var(--txt);
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
+    .btn.secondary:hover{background: rgba(255,255,255,.16)}
+    .field{
+      display:flex; flex-direction:column; gap:6px; margin-top:10px;
+    }
+    label{font-size:12px;color:var(--muted)}
+    textarea, input{
+      width:100%;
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      color: var(--txt);
+      outline: none;
+      font-size:14px;
+    }
+    textarea{min-height:140px; resize: vertical}
+    .mini{
+      font-size:12px;color:var(--muted);
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; align-items:center;
+    }
+    .mini code{
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--line);
+      padding:4px 8px;
+      border-radius:999px;
+      color: rgba(255,255,255,.88);
+    }
+    .hr{height:1px;background:var(--line);margin:12px 0}
+    .list{display:flex; flex-direction:column; gap:10px}
+    .item{
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(0,0,0,.18);
+      display:flex; gap:10px; align-items:flex-start; justify-content:space-between;
+    }
+    .item b{font-size:13px}
+    .item span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+    .item .actions{display:flex; gap:8px}
+    .iconbtn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--txt);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .iconbtn:hover{background: rgba(255,255,255,.14)}
+    .toast{
+      position: fixed;
+      left: 18px; right: 18px;
+      bottom: 18px;
+      max-width:980px;
+      margin:0 auto;
+      background: rgba(0,0,0,.55);
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: rgba(255,255,255,.92);
+      display:none;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      font-size: 13px;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>🚀 Site Publicado com Sucesso!</h1>
-    <p>Se você está vendo esta página no Netlify, o deploy funcionou corretamente.</p>
-    <button onclick="alert('Está funcionando perfeitamente!')">
-      Testar Botão
-    </button>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo">S32</div>
+        <div class="title">
+          <b>S32 (Secretaria 24/7)</b>
+          <span>Central de rotina, mensagens e checklist, no iPhone</span>
+        </div>
+      </div>
+
+      <div class="status">
+        <div class="pill" id="netPill">
+          <span class="dot" id="netDot"></span>
+          <span id="netText">verificando rede...</span>
+        </div>
+        <div class="pill" id="pwaPill">
+          <span class="dot warn" id="pwaDot"></span>
+          <span id="pwaText">modo navegador</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Painel rápido</h2>
+        <p>Use o S32 como base da sua secretaria: registrar pendências, disparar ações e manter o dia organizado.</p>
+
+        <div class="row">
+          <a class="btn" href="https://outlook.office.com/mail/" target="_blank" rel="noopener">Abrir Outlook</a>
+          <a class="btn" href="https://teams.microsoft.com/" target="_blank" rel="noopener">Abrir Teams</a>
+          <a class="btn secondary" href="https://to-do.office.com/" target="_blank" rel="noopener">Microsoft To Do</a>
+          <button class="btn secondary" id="btnInstall" style="display:none">Instalar no iPhone</button>
+        </div>
+
+        <div class="hr"></div>
+
+        <h2>Checklist do dia</h2>
+        <div class="field">
+          <label for="checkText">Escreva seu checklist (um item por linha)</label>
+          <textarea id="checkText" placeholder="Ex:&#10;Enviar cobrança do cliente X&#10;Cobrar retorno do fornecedor Y&#10;Revisar agenda e prazos"></textarea>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="btnSave">Salvar</button>
+          <button class="btn secondary" id="btnClear">Limpar</button>
+          <button class="btn secondary" id="btnCopy">Copiar</button>
+        </div>
+
+        <div class="mini">
+          <span>Dica iPhone: abra este site no Safari, toque em <code>Compartilhar</code> e depois <code>Adicionar à Tela de Início</code>.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Atalhos e rotinas</h2>
+        <div class="list" id="shortcuts"></div>
+
+        <div class="hr"></div>
+
+        <h2>Notas rápidas</h2>
+        <div class="field">
+          <label for="notes">Anotações locais (salvas no aparelho)</label>
+          <textarea id="notes" placeholder="Ex: condição comercial, retorno de cliente, lembretes..."></textarea>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="btnSaveNotes">Salvar notas</button>
+          <button class="btn secondary" id="btnCopyNotes">Copiar notas</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ====== Helpers ======
+    const $ = (id) => document.getElementById(id);
+    const toast = (msg) => {
+      const el = $("toast");
+      el.textContent = msg;
+      el.style.display = "block";
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => (el.style.display = "none"), 2200);
+    };
+
+    // ====== Network indicator ======
+    function updateNetwork() {
+      const online = navigator.onLine;
+      $("netDot").className = "dot " + (online ? "ok" : "warn");
+      $("netText").textContent = online ? "online" : "offline";
+    }
+    window.addEventListener("online", updateNetwork);
+    window.addEventListener("offline", updateNetwork);
+    updateNetwork();
+
+    // ====== PWA mode indicator ======
+    function updatePwaMode() {
+      const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      $("pwaDot").className = "dot " + (isStandalone ? "ok" : "warn");
+      $("pwaText").textContent = isStandalone ? "modo app" : "modo navegador";
+    }
+    updatePwaMode();
+
+    // ====== Local storage ======
+    const KEY_CHECK = "s32_checklist_v1";
+    const KEY_NOTES = "s32_notes_v1";
+
+    function loadData() {
+      $("checkText").value = localStorage.getItem(KEY_CHECK) || "";
+      $("notes").value = localStorage.getItem(KEY_NOTES) || "";
+    }
+    loadData();
+
+    $("btnSave").addEventListener("click", () => {
+      localStorage.setItem(KEY_CHECK, $("checkText").value);
+      toast("Checklist salvo.");
+    });
+
+    $("btnClear").addEventListener("click", () => {
+      $("checkText").value = "";
+      localStorage.removeItem(KEY_CHECK);
+      toast("Checklist limpo.");
+    });
+
+    $("btnCopy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText($("checkText").value || "");
+        toast("Checklist copiado.");
+      } catch (e) {
+        toast("Não consegui copiar, seu navegador bloqueou.");
+      }
+    });
+
+    $("btnSaveNotes").addEventListener("click", () => {
+      localStorage.setItem(KEY_NOTES, $("notes").value);
+      toast("Notas salvas.");
+    });
+
+    $("btnCopyNotes").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText($("notes").value || "");
+        toast("Notas copiadas.");
+      } catch (e) {
+        toast("Não consegui copiar, seu navegador bloqueou.");
+      }
+    });
+
+    // ====== Shortcuts list ======
+    const shortcuts = [
+      { title: "Ritual 8:00", desc: "Checar agenda, e-mails e pendências", action: () => toast("Ritual 8:00: agenda, e-mails, pendências.") },
+      { title: "Cobrança", desc: "Modelo de mensagem rápida", action: () => {
+          const msg = "Olá, tudo bem? Passando para confirmar o status do pagamento em aberto e a previsão de regularização. Se precisar de boleto atualizado, me avise por aqui.";
+          navigator.clipboard.writeText(msg).then(() => toast("Texto de cobrança copiado."));
+        }
+      },
+      { title: "Follow-up", desc: "Modelo de retorno objetivo", action: () => {
+          const msg = "Oi, tudo bem? Só retomando nosso último ponto. Você consegue me confirmar o andamento e um prazo para retorno?";
+          navigator.clipboard.writeText(msg).then(() => toast("Texto de follow-up copiado."));
+        }
+      }
+    ];
+
+    function renderShortcuts() {
+      const root = $("shortcuts");
+      root.innerHTML = "";
+      shortcuts.forEach((s) => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <div>
+            <b>${s.title}</b>
+            <span>${s.desc}</span>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" title="Executar">OK</button>
+          </div>
+        `;
+        div.querySelector("button").addEventListener("click", s.action);
+        root.appendChild(div);
+      });
+    }
+    renderShortcuts();
+
+    // ====== Service Worker (offline + cache) ======
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("service-worker.js")
+          .then(() => console.log("SW ok"))
+          .catch(() => console.log("SW falhou"));
+      });
+    }
+
+    // ====== Install prompt (Android/desktop). No iPhone: Add to Home Screen ======
+    let deferredPrompt = null;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const b = $("btnInstall");
+      b.style.display = "inline-flex";
+      b.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        b.style.display = "none";
+        toast("Solicitação de instalação enviada.");
+      });
+    });
+  </script>
 </body>
 </html>
