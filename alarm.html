@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mensagem do Alarme - S32</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    padding: 40px;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 24px;
+    opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="saudacao"></h1>
+    <p id="frase"></p>
+</div>
+
+<script>
+const frases = [
+"Disciplina constrói liberdade.",
+"Hoje você fica 1% melhor.",
+"Constância vence talento.",
+"O foco de hoje constrói o futuro.",
+"Sem emoção, só execução.",
+"Acordar cedo é vantagem competitiva."
+];
+
+function gerarMensagem() {
+    const hora = new Date().getHours();
+    let saudacao = "";
+
+    if (hora < 12) {
+        saudacao = "Bom dia, Douglas";
+    } else if (hora < 18) {
+        saudacao = "Boa tarde, Douglas";
+    } else {
+        saudacao = "Boa noite, Douglas";
+    }
+
+    const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+
+    document.getElementById("saudacao").innerText = saudacao;
+    document.getElementById("frase").innerText = fraseAleatoria;
+}
+
+gerarMensagem();
+</script>
+
+</body>
+</html>
