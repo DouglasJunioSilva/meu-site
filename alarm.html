@@ -1,76 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mensagem do Alarme - S32</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b2a33" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Mensagem do Alarme - S32</title>
 
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
+  <link rel="icon" href="assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
 
-.container {
-    padding: 40px;
-}
-
-h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-}
-
-p {
-    font-size: 24px;
-    opacity: 0.9;
-}
-</style>
+  <style>
+    :root{
+      --txt:#ffffff;
+      --muted:#cfe3ea;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background: radial-gradient(1200px 800px at 20% 10%, #0f3b49 0%, #08212a 45%, #061a20 100%),
+                  radial-gradient(900px 600px at 80% 30%, #0b2f3a 0%, transparent 60%);
+    }
+    .box{
+      text-align:center;
+      max-width:820px;
+      width:100%;
+      padding:40px 16px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(34px, 5vw, 56px);
+      letter-spacing:.3px;
+    }
+    p{
+      margin:12px 0 0;
+      font-size: clamp(16px, 2.3vw, 22px);
+      color:var(--muted);
+    }
+    .btn{
+      margin-top:22px;
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      text-decoration:none;
+      font-weight:700;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="box">
+    <h1 id="saudacao">Olá, Douglas</h1>
+    <p id="frase">Carregando frase do dia...</p>
+    <a class="btn" href="./">Voltar ao S32</a>
+  </div>
 
-<div class="container">
-    <h1 id="saudacao"></h1>
-    <p id="frase"></p>
-</div>
+  <script>
+    const NOME = "Douglas";
 
-<script>
-const frases = [
-"Disciplina constrói liberdade.",
-"Hoje você fica 1% melhor.",
-"Constância vence talento.",
-"O foco de hoje constrói o futuro.",
-"Sem emoção, só execução.",
-"Acordar cedo é vantagem competitiva."
-];
-
-function gerarMensagem() {
-    const hora = new Date().getHours();
-    let saudacao = "";
-
-    if (hora < 12) {
-        saudacao = "Bom dia, Douglas";
-    } else if (hora < 18) {
-        saudacao = "Boa tarde, Douglas";
-    } else {
-        saudacao = "Boa noite, Douglas";
+    function saudacaoPorHora(h){
+      if (h >= 5 && h < 12) return "Bom dia";
+      if (h >= 12 && h < 18) return "Boa tarde";
+      return "Boa noite";
     }
 
-    const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+    const FRASES = [
+      "Constância vence talento.",
+      "O foco de hoje constrói o futuro.",
+      "Pequenos passos, grandes resultados.",
+      "Disciplina é liberdade.",
+      "Faça o simples bem feito, todos os dias.",
+      "Seu ritmo, sua jornada, siga firme.",
+      "Você não precisa de perfeição, precisa de continuidade.",
+      "Execute o básico com excelência.",
+      "Uma decisão por vez, um avanço por dia."
+    ];
 
-    document.getElementById("saudacao").innerText = saudacao;
-    document.getElementById("frase").innerText = fraseAleatoria;
-}
+    function fraseDoDia(){
+      const hoje = new Date();
+      const chave = "s32_frase_" + hoje.toISOString().slice(0,10); // AAAA-MM-DD
 
-gerarMensagem();
-</script>
+      const salva = localStorage.getItem(chave);
+      if (salva) return salva;
 
+      const idx = Math.floor(Math.random() * FRASES.length);
+      const frase = FRASES[idx];
+
+      localStorage.setItem(chave, frase);
+      return frase;
+    }
+
+    const agora = new Date();
+    document.getElementById("saudacao").textContent = saudacaoPorHora(agora.getHours()) + ", " + NOME;
+    document.getElementById("frase").textContent = fraseDoDia();
+  </script>
 </body>
 </html>
