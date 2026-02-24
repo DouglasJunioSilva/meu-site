@@ -1,333 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b2a33" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>S32 (Secretaria 24/7)</title>
-
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="assets/icon-192.png" />
-  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S32 - Secretaria 24/7</title>
 
   <style>
-    :root{
-      --bg1:#08212a;
-      --bg2:#0b2f3a;
-      --card:#0b2730cc;
-      --stroke:#163b46;
-      --txt:#e9f3f6;
-      --muted:#b8d1d9;
-      --accent:#28d7ff;
-      --btn:#1db8ff;
-      --btn2:#1b2f36;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--txt);
-      background: radial-gradient(1200px 800px at 20% 10%, #0f3b49 0%, var(--bg1) 45%, #061a20 100%),
-                  radial-gradient(900px 600px at 80% 30%, var(--bg2) 0%, transparent 60%);
-      min-height:100vh;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:24px;
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
     }
-    .wrap{width:min(980px, 100%);}
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:16px 18px;
-      border:1px solid var(--stroke);
-      background:linear-gradient(180deg, #0c2c35cc, #071b21cc);
-      border-radius:18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    h1 {
+      margin-bottom: 30px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 280px;
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-    .logo{
-      width:40px;height:40px;
-      border-radius:12px;
-      background: #0fe3ff;
-      display:grid;place-items:center;
-      font-weight:800;
-      color:#00222a;
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
     }
-    .title{
-      line-height:1.1;
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: #0e1c22;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
     }
-    .title h1{
-      font-size:18px;
-      margin:0;
-      font-weight:800;
+
+    button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: #00c6ff;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
     }
-    .title p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:12px;
+
+    button:hover {
+      opacity: 0.9;
     }
-    .status{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      background:#071b21aa;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:50%;
-      background:#2aff8a;
-      box-shadow:0 0 0 3px rgba(42,255,138,.12);
-    }
-    .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: 1.25fr .95fr;
-      gap:16px;
-    }
-    @media (max-width: 860px){
-      .grid{grid-template-columns:1fr}
-      .brand{min-width:auto}
-    }
-    .card{
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      background:linear-gradient(180deg, #0c2c35cc, #071b21cc);
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      padding:18px;
-    }
-    .card h2{
-      margin:0 0 8px 0;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
-    .card p{margin:0 0 14px 0;color:var(--muted)}
-    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
-    button{
-      border:0;
-      border-radius:12px;
-      padding:10px 14px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .btn-primary{background:var(--btn); color:#00222a;}
-    .btn-secondary{background:#0b2a33; color:var(--txt); border:1px solid var(--stroke);}
-    .btn-ghost{background:transparent; color:var(--muted); border:1px solid var(--stroke);}
-    textarea{
-      width:100%;
-      min-height:170px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:#061a20aa;
-      color:var(--txt);
-      padding:12px;
-      resize:vertical;
-      outline:none;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    }
-    .row{
-      display:flex;
-      gap:10px;
-      margin-top:10px;
-      flex-wrap:wrap;
-    }
-    .small{
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .tag{
-      display:inline-block;
-      padding:2px 8px;
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      background:#061a20aa;
-      color:var(--muted);
-      font-size:12px;
-      margin-right:6px;
-    }
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 12px;
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      background:#061a20aa;
-    }
-    .item strong{display:block; font-size:14px;}
-    .item span{display:block; font-size:12px; color:var(--muted); margin-top:2px;}
-    .ok{
-      background:#0d2a33;
-      border:1px solid var(--stroke);
-      color:var(--txt);
-      padding:8px 12px;
-      border-radius:999px;
-      font-weight:800;
-      min-width:56px;
+
+    .status {
+      float: right;
+      font-size: 14px;
+      opacity: 0.7;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo">S32</div>
-        <div class="title">
-          <h1>S32 (Secretaria 24/7)</h1>
-          <p>Central de rotina, mensagens e checklist, no iPhone</p>
-        </div>
-      </div>
-      <div class="status">
-        <div class="pill"><span class="dot"></span> online</div>
-        <div class="pill">modo navegador</div>
-      </div>
-    </div>
+
+  <div class="container">
+    <h1>S32 - Secretaria 24/7 <span class="status">● online</span></h1>
 
     <div class="grid">
+
       <div class="card">
-        <h2>Painel rápido</h2>
-        <p>Use o S32 como base da sua secretaria: registrar pendências, disparar ações e manter o dia organizado.</p>
-
-        <div class="btnrow">
-          <button class="btn-primary" onclick="window.open('https://outlook.office.com/mail/', '_blank')">Abrir Outlook</button>
-          <button class="btn-primary" onclick="window.open('https://teams.microsoft.com/', '_blank')">Abrir Teams</button>
-          <button class="btn-secondary" onclick="window.open('https://to-do.office.com/', '_blank')">Microsoft To Do</button>
-        </div>
-
-        <h2 style="margin-top:10px">Checklist do dia</h2>
-        <p>Escreva seu checklist (um item por linha)</p>
-        <textarea id="checklist" placeholder="Ex:
-Enviar cobrança do cliente X
-Cobrar retorno do fornecedor Y
-Revisar agenda e prazos"></textarea>
-
-        <div class="row">
-          <button class="btn-primary" onclick="saveChecklist()">Salvar</button>
-          <button class="btn-secondary" onclick="clearChecklist()">Limpar</button>
-          <button class="btn-ghost" onclick="copyChecklist()">Copiar</button>
-        </div>
-
-        <div class="small">
-          Dica iPhone: abra este site no Safari, toque em <span class="tag">Compartilhar</span> e depois <span class="tag">Adicionar à Tela de Início</span>.
-        </div>
+        <h2>Checklist do dia</h2>
+        <textarea id="checklist"></textarea>
+        <button onclick="salvarChecklist()">Salvar</button>
       </div>
 
       <div class="card">
-        <h2>Atalhos e rotinas</h2>
-        <div class="list">
-          <div class="item">
-            <div>
-              <strong>Ritual 8:00</strong>
-              <span>Checar agenda, e-mails e pendências</span>
-            </div>
-            <button class="ok" onclick="alert('OK!')">OK</button>
-          </div>
-          <div class="item">
-            <div>
-              <strong>Cobrança</strong>
-              <span>Modelo de mensagem rápida</span>
-            </div>
-            <button class="ok" onclick="alert('OK!')">OK</button>
-          </div>
-          <div class="item">
-            <div>
-              <strong>Follow-up</strong>
-              <span>Modelo de retorno objetivo</span>
-            </div>
-            <button class="ok" onclick="alert('OK!')">OK</button>
-          </div>
-        </div>
-
-        <h2 style="margin-top:16px">Notas rápidas</h2>
-        <p>Anotações locais (salvas no aparelho)</p>
-        <textarea id="notes" placeholder="Ex: condição comercial, retorno de cliente, lembretes..."></textarea>
-        <div class="row">
-          <button class="btn-primary" onclick="saveNotes()">Salvar notas</button>
-          <button class="btn-secondary" onclick="copyNotes()">Copiar notas</button>
-        </div>
+        <h2>Notas rápidas</h2>
+        <textarea id="notes"></textarea>
+        <button onclick="salvarNotas()">Salvar</button>
       </div>
+
     </div>
   </div>
 
-  <script>
-    // 1) Se vier modo de alarme, manda para a tela do alarme
-    (function(){
-      const url = new URL(window.location.href);
+<script>
+  const KEY_CHECK = "s32_checklist";
+  const KEY_NOTES = "s32_notes";
 
-      const modo = (url.searchParams.get("modo") || "").toLowerCase();
-      const temModoAlarme = url.searchParams.has("modo-alarme");
-      const alarme = (url.searchParams.get("alarme") || "").toLowerCase();
+  function salvarChecklist() {
+    localStorage.setItem(KEY_CHECK, document.getElementById("checklist").value);
+  }
 
-      if (modo === "alarme" || temModoAlarme || alarme === "1" || alarme === "true") {
-        const destino = new URL("alarm.html", url);
-        // Mantém qualquer info que você queira no futuro
-        destino.searchParams.set("from", "s32");
-        window.location.replace(destino.toString());
-      }
-    })();
+  function salvarNotas() {
+    localStorage.setItem(KEY_NOTES, document.getElementById("notes").value);
+  }
 
-    // 2) Persistência simples local
-    const KEY_CHECK = "s32_checklist_v1";
-    const KEY_NOTES = "s32_notes_v1";
+  document.getElementById("checklist").value = localStorage.getItem(KEY_CHECK) || "";
+  document.getElementById("notes").value = localStorage.getItem(KEY_NOTES) || "";
 
-    function saveChecklist(){
-      localStorage.setItem(KEY_CHECK, document.getElementById("checklist").value || "");
-      alert("Checklist salvo.");
-    }
-    function clearChecklist(){
-      document.getElementById("checklist").value = "";
-      localStorage.removeItem(KEY_CHECK);
-      alert("Checklist limpo.");
-    }
-    function copyChecklist(){
-      const txt = document.getElementById("checklist").value || "";
-      navigator.clipboard.writeText(txt);
-      alert("Checklist copiado.");
-    }
-    function saveNotes(){
-      localStorage.setItem(KEY_NOTES, document.getElementById("notes").value || "");
-      alert("Notas salvas.");
-    }
-    function copyNotes(){
-      const txt = document.getElementById("notes").value || "";
-      navigator.clipboard.writeText(txt);
-      alert("Notas copiadas.");
-    }
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
+  }
 
-    // Carrega ao abrir
-    document.getElementById("checklist").value = localStorage.getItem(KEY_CHECK) || "";
-    document.getElementById("notes").value = localStorage.getItem(KEY_NOTES) || "";
+  const params = new URLSearchParams(window.location.search);
+  const modo = params.get("modo");
 
-    // Service Worker
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
-    }
-  </script>
+  if (modo === "alarme") {
+    window.location.href = "alarm.html";
+  }
+</script>
+
 </body>
 </html>
