@@ -1,59 +1,62 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b2a33" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mensagem do Alarme - S32</title>
 
-  <link rel="icon" href="assets/icon-192.png" />
-  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <meta name="theme-color" content="#0b2a33" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./assets/icon-192.png" />
 
   <style>
     :root{
-      --txt:#ffffff;
-      --muted:#cfe3ea;
+      --bg1:#0b2a33;
+      --bg2:#143b46;
+      --text:#eaf6ff;
+      --muted: rgba(234,246,255,0.70);
+      --stroke: rgba(255,255,255,0.12);
+      --btn: rgba(255,255,255,0.10);
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--txt);
+      color:var(--text);
       min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:24px;
-      background: radial-gradient(1200px 800px at 20% 10%, #0f3b49 0%, #08212a 45%, #061a20 100%),
-                  radial-gradient(900px 600px at 80% 30%, #0b2f3a 0%, transparent 60%);
+      background: radial-gradient(1200px 700px at 30% 20%, #1a5b6b 0%, rgba(26,91,107,0) 55%),
+                  radial-gradient(900px 600px at 80% 30%, #0e3f4b 0%, rgba(14,63,75,0) 55%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 18px;
     }
     .box{
       text-align:center;
-      max-width:820px;
-      width:100%;
-      padding:40px 16px;
+      width:min(900px, 100%);
+      padding:20px;
     }
     h1{
-      margin:0;
-      font-size: clamp(34px, 5vw, 56px);
-      letter-spacing:.3px;
+      margin:0 0 10px 0;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: 0.2px;
     }
     p{
-      margin:12px 0 0;
-      font-size: clamp(16px, 2.3vw, 22px);
+      margin:0 0 18px 0;
+      font-size: clamp(18px, 2.2vw, 26px);
       color:var(--muted);
     }
     .btn{
-      margin-top:22px;
       display:inline-block;
+      border:1px solid var(--stroke);
+      background: var(--btn);
+      color: var(--text);
       padding:10px 14px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.18);
-      color: var(--txt);
-      text-decoration:none;
+      cursor:pointer;
       font-weight:700;
+      text-decoration:none;
     }
   </style>
 </head>
@@ -61,12 +64,26 @@
 <body>
   <div class="box">
     <h1 id="saudacao">Olá, Douglas</h1>
-    <p id="frase">Carregando frase do dia...</p>
+    <p id="frase">Você está no comando do seu dia.</p>
+
     <a class="btn" href="./">Voltar ao S32</a>
   </div>
 
   <script>
-    const NOME = "Douglas";
+    const nome = "Douglas";
+
+    const frases = [
+      "Constância vence talento.",
+      "O foco de hoje constrói o futuro.",
+      "Disciplina é liberdade.",
+      "Um passo por vez, sem pressa, com direção.",
+      "Faça o simples bem feito, todos os dias.",
+      "Você não precisa de mais tempo, precisa de prioridade.",
+      "Comece, o resto se ajusta no caminho.",
+      "Pequenas vitórias somam grandes resultados.",
+      "A execução é o que separa intenção de resultado.",
+      "Energia certa, na hora certa, muda tudo."
+    ];
 
     function saudacaoPorHora(h){
       if (h >= 5 && h < 12) return "Bom dia";
@@ -74,34 +91,19 @@
       return "Boa noite";
     }
 
-    const FRASES = [
-      "Constância vence talento.",
-      "O foco de hoje constrói o futuro.",
-      "Pequenos passos, grandes resultados.",
-      "Disciplina é liberdade.",
-      "Faça o simples bem feito, todos os dias.",
-      "Seu ritmo, sua jornada, siga firme.",
-      "Você não precisa de perfeição, precisa de continuidade.",
-      "Execute o básico com excelência.",
-      "Uma decisão por vez, um avanço por dia."
-    ];
-
     function fraseDoDia(){
       const hoje = new Date();
-      const chave = "s32_frase_" + hoje.toISOString().slice(0,10); // AAAA-MM-DD
+      const key = "s32_frase_" + hoje.getFullYear() + "-" + (hoje.getMonth()+1) + "-" + hoje.getDate();
+      const ja = localStorage.getItem(key);
+      if (ja) return ja;
 
-      const salva = localStorage.getItem(chave);
-      if (salva) return salva;
-
-      const idx = Math.floor(Math.random() * FRASES.length);
-      const frase = FRASES[idx];
-
-      localStorage.setItem(chave, frase);
-      return frase;
+      const escolhida = frases[Math.floor(Math.random() * frases.length)];
+      localStorage.setItem(key, escolhida);
+      return escolhida;
     }
 
     const agora = new Date();
-    document.getElementById("saudacao").textContent = saudacaoPorHora(agora.getHours()) + ", " + NOME;
+    document.getElementById("saudacao").textContent = saudacaoPorHora(agora.getHours()) + ", " + nome;
     document.getElementById("frase").textContent = fraseDoDia();
   </script>
 </body>
