@@ -1,305 +1,73 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>S32 (Secretaria 24/7)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S32 - Secretaria 24/7</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
 
-  <meta name="theme-color" content="#0b2a33" />
-  <link rel="manifest" href="./manifest.json" />
+.container {
+    padding: 30px;
+}
 
-  <!-- Ícones -->
-  <link rel="icon" href="./assets/icon-192.png" />
-  <link rel="apple-touch-icon" href="./assets/icon-192.png" />
+h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
 
-  <style>
-    :root{
-      --bg1:#0b2a33;
-      --bg2:#143b46;
-      --card: rgba(10, 20, 26, 0.55);
-      --stroke: rgba(255,255,255,0.10);
-      --text:#eaf6ff;
-      --muted: rgba(234,246,255,0.65);
-      --accent:#19c2ff;
-      --btn:#1fbfff;
-      --btnText:#03202a;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      min-height:100vh;
-      background: radial-gradient(1200px 700px at 30% 20%, #1a5b6b 0%, rgba(26,91,107,0) 55%),
-                  radial-gradient(900px 600px at 80% 30%, #0e3f4b 0%, rgba(14,63,75,0) 55%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
-      display:flex;
-      justify-content:center;
-      padding:28px 18px;
-    }
-    .wrap{width:min(1100px, 100%);}
-    .top{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      padding:16px 18px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,0.25);
-      border-radius:18px;
-      backdrop-filter: blur(10px);
-      margin-bottom:18px;
-    }
-    .logo{
-      width:44px;height:44px;border-radius:12px;
-      background:#0ad;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;color:#02202a;
-      overflow:hidden;
-    }
-    .logo img{width:44px;height:44px;display:block}
-    .title{
-      flex:1;
-      line-height:1.1;
-    }
-    .title h1{margin:0;font-size:18px}
-    .title p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
-    .chips{display:flex; gap:10px; align-items:center}
-    .chip{
-      display:flex; gap:8px; align-items:center;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,0.25);
-      font-size:12px;
-      color:var(--muted);
-    }
-    .dot{width:8px;height:8px;border-radius:50%;background:#33ff9a}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap:18px;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
-    .card{
-      border:1px solid var(--stroke);
-      background: var(--card);
-      border-radius:22px;
-      padding:18px;
-      backdrop-filter: blur(12px);
-    }
-    h2{margin:0 0 10px 0; font-size:18px}
-    .muted{color:var(--muted); font-size:13px}
-    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .btn{
-      border:0;
-      padding:10px 14px;
-      border-radius:12px;
-      font-weight:700;
-      cursor:pointer;
-      background: var(--btn);
-      color: var(--btnText);
-    }
-    .btn.secondary{
-      background: rgba(255,255,255,0.10);
-      color: var(--text);
-      border:1px solid var(--stroke);
-      font-weight:700;
-    }
-    textarea{
-      width:100%;
-      min-height:140px;
-      resize: vertical;
-      margin-top:10px;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,0.28);
-      color: var(--text);
-      outline:none;
-      font-size:14px;
-      line-height:1.35;
-    }
-    .actions{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .smallhint{
-      margin-top:10px;
-      font-size:12px;
-      color: var(--muted);
-    }
-    .mini{
-      border-radius:16px;
-      padding:14px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,0.22);
-      margin-top:12px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-    }
-    .mini b{display:block; margin-bottom:3px}
-    .mini span{display:block; color:var(--muted); font-size:12px}
-  </style>
+p {
+    font-size: 26px;
+    line-height: 1.4;
+}
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="logo">
-        <img src="./assets/icon-192.png" alt="S32" />
-      </div>
 
-      <div class="title">
-        <h1>S32 (Secretaria 24/7)</h1>
-        <p>Central de rotina, mensagens e checklist, no iPhone</p>
-      </div>
+<div class="container">
+    <h1 id="saudacao"></h1>
+    <p id="frase"></p>
+</div>
 
-      <div class="chips">
-        <div class="chip"><span class="dot"></span> online</div>
-        <div class="chip"><span class="dot" style="background:#ffd166"></span> modo navegador</div>
-      </div>
-    </div>
+<script>
+function gerarMensagem() {
+    const hora = new Date().getHours();
+    let saudacao = "";
 
-    <div class="grid">
-      <div class="card">
-        <h2>Painel rápido</h2>
-        <div class="muted">Use o S32 como base da sua secretaria: registrar pendências, disparar ações e manter o dia organizado.</div>
-
-        <div class="btnrow">
-          <button class="btn" id="btnOutlook">Abrir Outlook</button>
-          <button class="btn" id="btnTeams">Abrir Teams</button>
-          <button class="btn secondary" id="btnTodo">Microsoft To Do</button>
-        </div>
-
-        <div style="height:14px"></div>
-        <h2 style="font-size:16px">Checklist do dia</h2>
-        <div class="muted">Escreva seu checklist (um item por linha)</div>
-        <textarea id="checklist" placeholder="Ex:
-Enviar cobrança do cliente X
-Cobrar retorno do fornecedor Y
-Revisar agenda e prazos"></textarea>
-
-        <div class="actions">
-          <button class="btn" id="btnSalvarCheck">Salvar</button>
-          <button class="btn secondary" id="btnLimparCheck">Limpar</button>
-          <button class="btn secondary" id="btnCopiarCheck">Copiar</button>
-        </div>
-
-        <div class="smallhint">
-          Dica iPhone: abra este site no Safari, toque em <b>Compartilhar</b> e depois <b>Adicionar à Tela de Início</b>.
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Atalhos e rotinas</h2>
-
-        <div class="mini">
-          <div>
-            <b>Ritual 8:00</b>
-            <span>Checar agenda, e-mails e pendências</span>
-          </div>
-          <button class="btn secondary" type="button">OK</button>
-        </div>
-
-        <div class="mini">
-          <div>
-            <b>Cobrança</b>
-            <span>Modelo de mensagem rápida</span>
-          </div>
-          <button class="btn secondary" type="button">OK</button>
-        </div>
-
-        <div class="mini">
-          <div>
-            <b>Follow-up</b>
-            <span>Modelo de retorno objetivo</span>
-          </div>
-          <button class="btn secondary" type="button">OK</button>
-        </div>
-
-        <div style="height:14px"></div>
-        <h2 style="font-size:16px">Notas rápidas</h2>
-        <div class="muted">Anotações locais (salvas no aparelho)</div>
-        <textarea id="notes" placeholder="Ex: condição comercial, retorno de cliente, lembretes..."></textarea>
-
-        <div class="actions">
-          <button class="btn" id="btnSalvarNotes">Salvar notas</button>
-          <button class="btn secondary" id="btnCopiarNotes">Copiar notas</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 1) Redirecionamento do modo alarme
-    const params = new URLSearchParams(window.location.search);
-    const modo = params.get("modo");
-    if (modo === "alarme") {
-      window.location.replace("./alarm.html");
+    if (hora < 12) {
+        saudacao = "Bom dia, Douglas!";
+    } else if (hora < 18) {
+        saudacao = "Boa tarde, Douglas!";
+    } else {
+        saudacao = "Boa noite, Douglas!";
     }
 
-    // 2) Links rápidos (se quiser, depois trocamos para deep links do iPhone)
-    document.getElementById("btnOutlook").addEventListener("click", () => {
-      window.location.href = "https://outlook.office.com/mail/";
-    });
-    document.getElementById("btnTeams").addEventListener("click", () => {
-      window.location.href = "https://teams.microsoft.com/";
-    });
-    document.getElementById("btnTodo").addEventListener("click", () => {
-      window.location.href = "https://to-do.office.com/";
-    });
+    const frases = [
+        "Hoje é um novo dia para evoluir 🚀",
+        "Disciplina constrói liberdade.",
+        "Você acordou antes da maioria. Continue.",
+        "Constância vence talento.",
+        "Pequenos avanços diários geram grandes resultados."
+    ];
 
-    // 3) Persistência local
-    const KEY_CHECK = "s32_checklist_v1";
-    const KEY_NOTES = "s32_notes_v1";
+    const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
 
-    const checklistEl = document.getElementById("checklist");
-    const notesEl = document.getElementById("notes");
+    document.getElementById("saudacao").innerText = saudacao;
+    document.getElementById("frase").innerText = fraseAleatoria;
+}
 
-    checklistEl.value = localStorage.getItem(KEY_CHECK) || "";
-    notesEl.value = localStorage.getItem(KEY_NOTES) || "";
+gerarMensagem();
+</script>
 
-    document.getElementById("btnSalvarCheck").addEventListener("click", () => {
-      localStorage.setItem(KEY_CHECK, checklistEl.value || "");
-      alert("Checklist salvo.");
-    });
-
-    document.getElementById("btnLimparCheck").addEventListener("click", () => {
-      checklistEl.value = "";
-      localStorage.setItem(KEY_CHECK, "");
-    });
-
-    document.getElementById("btnCopiarCheck").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(checklistEl.value || "");
-        alert("Checklist copiado.");
-      } catch {
-        alert("Não consegui copiar. Tente manualmente.");
-      }
-    });
-
-    document.getElementById("btnSalvarNotes").addEventListener("click", () => {
-      localStorage.setItem(KEY_NOTES, notesEl.value || "");
-      alert("Notas salvas.");
-    });
-
-    document.getElementById("btnCopiarNotes").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(notesEl.value || "");
-        alert("Notas copiadas.");
-      } catch {
-        alert("Não consegui copiar. Tente manualmente.");
-      }
-    });
-
-    // 4) Service Worker
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
-    }
-  </script>
 </body>
 </html>
