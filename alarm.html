@@ -1,110 +1,280 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mensagem do Alarme - S32</title>
-
-  <meta name="theme-color" content="#0b2a33" />
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="icon" href="./assets/icon-192.png" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>S32, Frase do Dia</title>
+  <meta name="theme-color" content="#03141f" />
   <style>
-    :root{
-      --bg1:#0b2a33;
-      --bg2:#143b46;
-      --text:#eaf6ff;
-      --muted: rgba(234,246,255,0.70);
-      --stroke: rgba(255,255,255,0.12);
-      --btn: rgba(255,255,255,0.10);
+    :root {
+      --bg1: #03141f;
+      --bg2: #08283a;
+      --card: rgba(5, 16, 24, 0.78);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #eef6fb;
+      --muted: #b8c8d4;
+      --accent: #30c7ff;
+      --accent-soft: rgba(48, 199, 255, 0.18);
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      min-height:100vh;
-      background: radial-gradient(1200px 700px at 30% 20%, #1a5b6b 0%, rgba(26,91,107,0) 55%),
-                  radial-gradient(900px 600px at 80% 30%, #0e3f4b 0%, rgba(14,63,75,0) 55%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:28px 18px;
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
-    .box{
-      text-align:center;
-      width:min(900px, 100%);
-      padding:20px;
-    }
-    h1{
-      margin:0 0 10px 0;
-      font-size: clamp(36px, 5vw, 64px);
-      letter-spacing: 0.2px;
-    }
-    p{
-      margin:0 0 18px 0;
-      font-size: clamp(18px, 2.2vw, 26px);
-      color:var(--muted);
-    }
-    .btn{
-      display:inline-block;
-      border:1px solid var(--stroke);
-      background: var(--btn);
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       color: var(--text);
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:700;
-      text-decoration:none;
+      background:
+        radial-gradient(circle at top, #0d3d58 0%, var(--bg1) 38%),
+        linear-gradient(180deg, var(--bg2) 0%, var(--bg1) 100%);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(20px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom)) 18px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px 22px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #49d2ff 0%, #22b9f5 100%);
+      color: #001018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.35rem;
+      box-shadow: 0 10px 30px rgba(48, 199, 255, 0.28);
+      flex: 0 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0 0 2px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .message-box {
+      margin-top: 18px;
+      padding: 24px 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .message {
+      margin: 0;
+      font-size: clamp(1.7rem, 5.4vw, 3.2rem);
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: pre-line;
+    }
+
+    .sub {
+      margin-top: 18px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(48, 199, 255, 0.18);
+      background: var(--accent-soft);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #18e0a4;
+      box-shadow: 0 0 14px rgba(24, 224, 164, 0.7);
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        border-radius: 24px;
+        padding: 22px 16px;
+      }
+
+      .message-box {
+        padding: 20px 16px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="box">
-    <h1 id="saudacao">Olá, Douglas</h1>
-    <p id="frase">Você está no comando do seu dia.</p>
+  <main class="wrap">
+    <section class="card">
+      <div class="top">
+        <div class="badge">S32</div>
+        <div>
+          <p class="eyebrow">Secretaria 24/7</p>
+          <h1 class="title">Frase do dia</h1>
+        </div>
+      </div>
 
-    <a class="btn" href="./">Voltar ao S32</a>
-  </div>
+      <div class="message-box">
+        <p class="message" id="frase">Carregando sua mensagem...</p>
+        <div class="sub" id="dataTexto">Preparando a motivação de hoje.</div>
+      </div>
+
+      <div class="footer">
+        <div class="pill"><span class="dot"></span> mensagem diária ativa</div>
+        <div class="pill" id="indiceFrase">frase 1</div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const nome = "Douglas";
-
-    const frases = [
-      "Constância vence talento.",
-      "O foco de hoje constrói o futuro.",
-      "Disciplina é liberdade.",
-      "Um passo por vez, sem pressa, com direção.",
-      "Faça o simples bem feito, todos os dias.",
-      "Você não precisa de mais tempo, precisa de prioridade.",
-      "Comece, o resto se ajusta no caminho.",
-      "Pequenas vitórias somam grandes resultados.",
-      "A execução é o que separa intenção de resultado.",
-      "Energia certa, na hora certa, muda tudo."
+    const FRASES = [
+      'Bom dia, Douglas.\nComece o dia dominando o que depende de você.',
+      'Hoje não precisa ser perfeito.\nPrecisa ser feito com intenção.',
+      'Resultado forte começa com disciplina silenciosa.',
+      'Organizar o dia cedo é ganhar tempo duas vezes.',
+      'Toda rotina bem construída reduz o peso das decisões.',
+      'Quem mantém constância avança mesmo nos dias comuns.',
+      'Seu diferencial não está só na ideia, está na execução.',
+      'Um passo firme pela manhã muda o ritmo do dia inteiro.',
+      'Liderar bem também é começar o dia com clareza.',
+      'Foco no essencial, energia no que gera resultado.',
+      'Grandes mudanças nascem de pequenas decisões repetidas.',
+      'Seu dia melhora quando sua prioridade fica clara.',
+      'Disciplina é continuar mesmo quando a empolgação não veio.',
+      'O que parece simples, quando bem feito, muda tudo.',
+      'Comece com calma, mas comece com direção.',
+      'Seu padrão diário está construindo seu próximo nível.',
+      'Não espere o dia ficar leve para agir.\nAja, e o dia se organiza.',
+      'Toda manhã é uma nova chance de retomar o controle.',
+      'Você não precisa acelerar tudo.\nPrecisa avançar no certo.',
+      'Quem planeja melhor, reage menos e realiza mais.',
+      'Hoje vale mais consistência do que intensidade sem rumo.',
+      'Seu compromisso com o básico bem feito já te diferencia.',
+      'A rotina certa protege sua energia para o que importa.',
+      'Cada decisão objetiva economiza desgaste desnecessário.',
+      'O dia responde melhor quando você começa com presença.',
+      'Seu crescimento está escondido nas repetições certas.',
+      'Antes de correr, alinhe.\nAntes de alinhar, decida.',
+      'Faça o importante primeiro, o resto encontra espaço.',
+      'Clareza reduz ansiedade e aumenta execução.',
+      'Você não precisa provar tudo hoje.\nPrecisa sustentar o ritmo.',
+      'Quem constrói com método chega mais longe.',
+      'A manhã é uma oportunidade de assumir o comando.',
+      'Seu futuro respeita a sua constância de agora.',
+      'Menos pressa, mais direção.',
+      'Ação organizada vale mais do que intenção acumulada.',
+      'Você já venceu muita coisa.\nHoje é mais um capítulo.',
+      'Repetir o certo também é estratégia.',
+      'Sua melhor versão começa nas primeiras escolhas do dia.',
+      'Comece leve, pense claro e mantenha o padrão.',
+      'Toda meta grande precisa de um início simples.',
+      'O dia fica melhor quando você entra nele com propósito.',
+      'O que você faz cedo define o tom do restante.',
+      'Seu foco de hoje está preparando os resultados de amanhã.',
+      'Produtividade sem clareza cansa.\nClareza com ação transforma.',
+      'A consistência de hoje protege os resultados de amanhã.',
+      'Seu compromisso diário vale mais do que um pico isolado.',
+      'A direção certa diminui o peso do caminho.',
+      'Faça do começo do dia o seu ponto de virada.',
+      'Toda rotina forte nasce de uma decisão simples: continuar.',
+      'Hoje é um bom dia para agir com calma, firmeza e presença.'
     ];
 
-    function saudacaoPorHora(h){
-      if (h >= 5 && h < 12) return "Bom dia";
-      if (h >= 12 && h < 18) return "Boa tarde";
-      return "Boa noite";
+    function getDayKey() {
+      const agora = new Date();
+      const ano = agora.getFullYear();
+      const mes = String(agora.getMonth() + 1).padStart(2, '0');
+      const dia = String(agora.getDate()).padStart(2, '0');
+      return `${ano}-${mes}-${dia}`;
     }
 
-    function fraseDoDia(){
+    function hashString(texto) {
+      let hash = 0;
+      for (let i = 0; i < texto.length; i++) {
+        hash = ((hash << 5) - hash) + texto.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash);
+    }
+
+    function fraseDoDia() {
+      const chave = getDayKey();
+      const indice = hashString(chave) % FRASES.length;
+      return { indice, texto: FRASES[indice] };
+    }
+
+    function formatarData() {
       const hoje = new Date();
-      const key = "s32_frase_" + hoje.getFullYear() + "-" + (hoje.getMonth()+1) + "-" + hoje.getDate();
-      const ja = localStorage.getItem(key);
-      if (ja) return ja;
-
-      const escolhida = frases[Math.floor(Math.random() * frases.length)];
-      localStorage.setItem(key, escolhida);
-      return escolhida;
+      return hoje.toLocaleDateString('pt-BR', {
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long'
+      });
     }
 
-    const agora = new Date();
-    document.getElementById("saudacao").textContent = saudacaoPorHora(agora.getHours()) + ", " + nome;
-    document.getElementById("frase").textContent = fraseDoDia();
+    function atualizarTela() {
+      const { indice, texto } = fraseDoDia();
+      document.getElementById('frase').textContent = texto;
+      document.getElementById('dataTexto').textContent = `Mensagem carregada para ${formatarData()}.`;
+      document.getElementById('indiceFrase').textContent = `frase ${indice + 1}`;
+    }
+
+    atualizarTela();
+
+    setInterval(() => {
+      atualizarTela();
+    }, 60000);
   </script>
 </body>
 </html>
