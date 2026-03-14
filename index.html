@@ -1,73 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>S32 - Secretaria 24/7</title>
+
 <style>
+
 body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+margin:0;
+padding:0;
+background: linear-gradient(135deg,#0F2027,#203A43,#2C5364);
+color:white;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
 }
 
-.container {
-    padding: 30px;
+.container{
+padding:30px;
 }
 
-h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
+h1{
+font-size:42px;
+margin-bottom:20px;
 }
 
-p {
-    font-size: 26px;
-    line-height: 1.4;
+p{
+font-size:20px;
+opacity:0.9;
 }
+
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
-    <h1 id="saudacao"></h1>
-    <p id="frase"></p>
+
+<h1>S32</h1>
+
+<p>Secretaria 24/7</p>
+
+<p>Painel em evolução</p>
+
 </div>
-
-<script>
-function gerarMensagem() {
-    const hora = new Date().getHours();
-    let saudacao = "";
-
-    if (hora < 12) {
-        saudacao = "Bom dia, Douglas!";
-    } else if (hora < 18) {
-        saudacao = "Boa tarde, Douglas!";
-    } else {
-        saudacao = "Boa noite, Douglas!";
-    }
-
-    const frases = [
-        "Hoje é um novo dia para evoluir 🚀",
-        "Disciplina constrói liberdade.",
-        "Você acordou antes da maioria. Continue.",
-        "Constância vence talento.",
-        "Pequenos avanços diários geram grandes resultados."
-    ];
-
-    const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
-
-    document.getElementById("saudacao").innerText = saudacao;
-    document.getElementById("frase").innerText = fraseAleatoria;
-}
-
-gerarMensagem();
-</script>
 
 </body>
 </html>
